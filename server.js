@@ -19,17 +19,17 @@ app.ws("/debug/:id", (ws, req) => {
 
 app.post("/start", (req, res) => {
   engine.addBolt(req.body);
-  res.end("started");
+  res.end("{}");
 });
 
 app.post("/update", (req, res) => {
-  engine.addBolt(req.body);
-  res.end("updated");
+  engine.updateBolt(req.body);
+  res.end("{}");
 });
 
 app.post("/end/:id", (req, res) => {
   engine.removeBolt(req.params.id);
-  res.end("ended");
+  res.end("{}");
 });
 
 app.use("/", express.static("public"));

@@ -1,5 +1,5 @@
 function createStartCard() {
-  const card = createCard("Start");
+  const card = createCard("Start", "Start");
   card.addClass("start");
 
   const main = card.find(".main");

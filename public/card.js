@@ -1,6 +1,8 @@
-function createCard(title) {
+function createCard(type, title) {
+  const id = Math.floor(Math.random() * 100000);
+
   const card = $(`
-    <div id=${Math.floor(Math.random() * 100000)} class="card" style="top: 20px; left: 20px">
+    <div id=${id} class="card" type="${type}" style="top: 20px; left: 20px">
       <div class="title">${title}</div>
       <div class="cross">🗙</div>
       <div class="ports left"></div>
@@ -24,6 +26,8 @@ function createCard(title) {
       $(`.linkage[from="${id}"]`).remove();
       $(`.linkage[to="${id}"]`).remove();
     });
+
+    updateServer();
   });
 
   return card;

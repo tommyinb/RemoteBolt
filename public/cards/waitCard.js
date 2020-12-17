@@ -3,11 +3,15 @@ $(function () {
 });
 
 function createWaitCard() {
-  const card = createCard("Wait");
+  const card = createCard("Wait", "Wait");
   card.addClass("wait");
 
   const main = card.find(".main");
-  main.append('<input class="value" value="10s"/>');
+  $('<input class="time" name="time" value="10s"/>')
+    .appendTo(main)
+    .change(function () {
+      updateServer();
+    });
 
   const left = card.find(".ports.left");
   createPort("From", "flow").appendTo(left);

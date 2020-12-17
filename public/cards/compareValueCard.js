@@ -3,7 +3,7 @@ $(function () {
 });
 
 function createCompareValueCard() {
-  const card = createCard("Compare Value");
+  const card = createCard("CompareValue", "Compare Value");
   card.addClass("compare-value");
 
   const main = card.find(".main");

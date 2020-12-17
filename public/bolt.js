@@ -2,24 +2,30 @@ $(function () {
   createStartCard().appendTo(".bolt").addClass("critical").css("top", "150px");
 });
 
+let socket = null;
 $(async function connectServer() {
-  // const id = Math.floor(Math.random() * 10000);
-  // $(".bolt").attr("id", id);
-  // const data = getBoltData();
-  // await $.ajax({
-  //   type: "POST",
-  //   url: "/start",
-  //   data: JSON.stringify(data),
-  //   dataType: "json",
-  //   contentType: "application/json;charset=utf-8",
-  // }).promise();
-  // const socket = new WebSocket(`ws://${location.host}/debug/3`);
-  // socket.onmessage = (e) => {
-  //   console.log(e);
-  // };
-  // $(window).unload(() => $.post(`/end/${id}`));
-});
+  const id = Math.floor(Math.random() * 10000);
+  $(".bolt").attr("id", id);
 
+  await postData("/start");
+
+  socket = new WebSocket(`ws://${location.host}/debug/${id}`);
+  socket.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    for (const item of Object.values(data)) {
+      const element = $(`#${item.id}`);
+      if (element.is(".card")) {
+        setCardData(element, item);
+      } else if (element.is(".port")) {
+        setPortData(element, item);
+      }
+    }
+  };
+
+  $(window).on("unload", function () {
+    $.post(`/end/${id}`);
+  });
+});
 function getBoltData() {
   const bolt = $(".bolt");
   const boltData = { id: bolt.attr("id") };
@@ -42,27 +48,24 @@ function getBoltData() {
   return boltData;
 }
 function getCardData(card) {
-  const id = card.attr("id");
-
-  const type = card.find(".title").text();
-
-  const offset = card.offset();
-
-  const mains = card.find(".main [name]");
-  const mainDatas = Object.fromEntries(
-    mains.toArray().map((t) => [$(t).attr("name"), $(t).val() || $(t).text()])
-  );
-
-  const ports = card.find(".ports .port");
-  const portIds = ports.toArray().map((t) => $(t).attr("id"));
-
   return {
-    ...mainDatas,
-    ports: portIds,
-    id,
-    type,
-    x: offset.left,
-    y: offset.top,
+    id: card.attr("id"),
+    type: card.attr("type"),
+    offset: card.offset(),
+
+    main: Object.fromEntries(
+      card
+        .find(".main [name]")
+        .toArray()
+        .map((t) => [$(t).attr("name"), $(t).val() || $(t).text()])
+    ),
+
+    ports: card
+      .find(".ports .port")
+      .toArray()
+      .map((t) => $(t).attr("id")),
+
+    states: (card.attr("state") || "").split(/,\s*/).filter((t) => t),
   };
 }
 function getPortData(port) {
@@ -71,6 +74,7 @@ function getPortData(port) {
     type: "port",
     card: port.closest(".card").attr("id"),
     text: port.text(),
+    states: (port.attr("state") || "").split(/,\s*/).filter((t) => t),
   };
 }
 function getLinkageData(linkage) {
@@ -82,13 +86,43 @@ function getLinkageData(linkage) {
   };
 }
 
-async function updateServer() {
-  const data = getBoltData();
-  // await $.ajax({
-  //   type: "POST",
-  //   url: "/update",
-  //   data: JSON.stringify(data),
-  //   dataType: "json",
-  //   contentType: "application/json;charset=utf-8",
-  // }).promise();
+function setCardData(card, data) {
+  for (const [name, value] in Object.entries(data.main)) {
+    const field = card.find(`[${name}]`);
+    if (field.is("input")) {
+      field.val(value);
+    } else {
+      field.text(value);
+    }
+  }
+
+  card.attr("state", data.states.join(","));
 }
+function setPortData(port, data) {
+  port.attr("state", data.states.join(","));
+}
+
+async function updateServer() {
+  await postData("/update");
+}
+async function postData(url) {
+  const data = getBoltData();
+
+  await new Promise((resolve, reject) => {
+    $.ajax({
+      url,
+      data: JSON.stringify(data),
+      type: "POST",
+      dataType: "json",
+      contentType: "application/json;charset=utf-8",
+      success: resolve,
+      error: reject,
+    });
+  });
+}
+
+$(function loadPlay() {
+  $(".play").click(function () {
+    socket?.send("start");
+  });
+});

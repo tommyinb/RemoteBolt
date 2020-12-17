@@ -28,7 +28,7 @@ function addMenuItem(text, group, create) {
     const card = create();
     card.appendTo(".bolt");
 
-    //updateServer();
+    updateServer();
   });
 
   const menu = $(".menu");

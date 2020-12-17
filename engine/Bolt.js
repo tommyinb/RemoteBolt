@@ -1,4 +1,4 @@
-import Start from "./runners/Start.js";
+import parsers from "./runners/parsers.js";
 
 export default (data, engine) => {
   const { id, ...items } = data;
@@ -16,13 +16,8 @@ export default (data, engine) => {
     }
   }
   function tryParse(id, type) {
-    switch (type) {
-      case "Start":
-        return Start(id, bolt);
-
-      default:
-        return undefined;
-    }
+    const parser = parsers[`${type}Runner`];
+    return parser?.(id, bolt);
   }
 
   bolt.update = (data) => {
@@ -32,7 +27,10 @@ export default (data, engine) => {
 
     const newDatas = Object.values(data).filter((t) => !(t.id in bolt.runners));
     newDatas.forEach((t) => {
-      bolt.runners[t.id] = tryParse(t.id, bolt);
+      const runner = tryParse(t.id, t.type);
+      if (runner) {
+        bolt.runners[t.id] = runner;
+      }
     });
 
     for (const runner of oldRunners) {
@@ -40,10 +38,17 @@ export default (data, engine) => {
       if (updateData) {
         runner.update();
       } else {
+        runner.unload();
         delete bolt.runners[runner.id];
       }
     }
   };
+
+  bolt.start = () => bolt.getStartRunners().forEach((t) => t.in());
+  bolt.getStartRunners = () =>
+    Object.values(bolt.data)
+      .filter((t) => t.type === "Start")
+      .map((t) => bolt.runners[t.id]);
 
   bolt.send = () => engine.send(bolt.data);
 

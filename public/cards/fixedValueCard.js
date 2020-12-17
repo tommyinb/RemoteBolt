@@ -3,7 +3,7 @@ $(function () {
 });
 
 function createFixedValueCard() {
-  const card = createCard("Fixed Value");
+  const card = createCard("FixedValue", "Fixed Value");
   card.addClass("fixed-value");
 
   const main = card.find(".main");

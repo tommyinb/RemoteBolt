@@ -1,10 +1,11 @@
 export default (id, bolt) => {
-  const card = {
+  const runner = {
     id,
 
     getPortId: (portText) => {
-      const card = bolt.data[id];
-      const port = Object.values(card.ports).find((t) => t.text === portText);
+      const port = Object.values(bolt.data).find(
+        (t) => t.type === "port" && t.card === id && t.text === portText
+      );
       return port?.id;
     },
 
@@ -17,7 +18,7 @@ export default (id, bolt) => {
         .map((t) => t.to)
         .map((t) => bolt.data[t])
         .map((port) => {
-          const runner = bolt.runner[port.card];
+          const runner = bolt.runners[port.card];
           return runner?.in(port.id, value);
         }),
 
@@ -26,5 +27,5 @@ export default (id, bolt) => {
     unload: () => undefined,
   };
 
-  return card;
+  return runner;
 };

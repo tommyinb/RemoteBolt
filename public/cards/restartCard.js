@@ -3,7 +3,7 @@ $(function () {
 });
 
 function createRestartCard() {
-  const card = createCard("End");
+  const card = createCard("Restart", "End");
   card.addClass("restart");
 
   const main = card.find(".main");
