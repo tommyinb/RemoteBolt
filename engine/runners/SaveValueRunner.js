@@ -7,14 +7,25 @@ export default (id, bolt) => {
   const card = CardRunner(id, bolt);
 
   const cancellables = new Set();
-  card.in = async () => {
+  card.in = async (portId, _) => {
+    if (portId !== card.ports.from) {
+      return;
+    }
+
     try {
       bolt.data[id].states.push("active");
       bolt.send();
 
       const cancellable = Cancellable();
       cancellables.add(cancellable);
-      await cancellable.wait(500);
+      await cancellable.wait(100);
+
+      const [value] = card.forceIn(card.ports.fromValue);
+      bolt.data[id].main.value = value || 0;
+
+      bolt.send();
+
+      await cancellable.wait(400);
 
       bolt.data[id].states.remove("active");
       bolt.data[card.ports.to].states.push("active");
@@ -31,6 +42,8 @@ export default (id, bolt) => {
       console.error(e);
     }
   };
+
+  card.forceOut = () => bolt.data[id].main.value;
 
   card.unload = () => {
     cancellables.forEach((t) => t.cancel());

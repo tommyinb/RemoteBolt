@@ -14,10 +14,10 @@ function createWaitCard() {
     });
 
   const left = card.find(".ports.left");
-  createPort("From", "flow").appendTo(left);
+  createPort("from", "From", "flow").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Next", "flow").appendTo(right);
+  createPort("to", "Next", "flow").appendTo(right);
 
   return card;
 }

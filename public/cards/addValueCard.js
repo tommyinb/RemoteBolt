@@ -7,14 +7,14 @@ function createAddValueCard() {
   card.addClass("add-value");
 
   const main = card.find(".main");
-  main.append('<input class="value" value="1.7"/>');
+  main.append('<input name="value" value="1.7"/>');
 
   const left = card.find(".ports.left");
-  createPort("Value", "number").appendTo(left);
-  createPort("Adder", "number").appendTo(left);
+  createPort("from", "Value", "number").appendTo(left);
+  createPort("add", "Adder", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Sum", "number").appendTo(right);
+  createPort("to", "Sum", "number").appendTo(right);
 
   return card;
 }

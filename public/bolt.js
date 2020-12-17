@@ -72,6 +72,7 @@ function getPortData(port) {
   return {
     id: port.attr("id"),
     type: "port",
+    name: port.attr("name"),
     card: port.closest(".card").attr("id"),
     text: port.text(),
     states: (port.attr("state") || "").split(/,\s*/).filter((t) => t),
@@ -87,10 +88,11 @@ function getLinkageData(linkage) {
 }
 
 function setCardData(card, data) {
-  for (const [name, value] in Object.entries(data.main)) {
-    const field = card.find(`[${name}]`);
+  for (const [name, value] of Object.entries(data.main)) {
+    const field = card.find(`[name="${name}"]`);
     if (field.is("input")) {
       field.val(value);
+      field.trigger("refresh");
     } else {
       field.text(value);
     }

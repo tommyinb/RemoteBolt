@@ -1,5 +1,7 @@
-function createPort(text, type) {
-  const port = $(`<div id=${Math.floor(Math.random() * 100000)} class="port">${text}</div>`);
+function createPort(name, text, type) {
+  const port = $(
+    `<div id=${Math.floor(Math.random() * 100000)} name="${name}" class="port">${text}</div>`
+  );
 
   if (type) {
     port.attr("type", type);
