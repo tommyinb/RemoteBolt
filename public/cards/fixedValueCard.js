@@ -1,5 +1,5 @@
 $(function () {
-  addMenuItem("Fixed Value", 1, createFixedValueCard);
+  addMenuItem("Fixed Value", 2, createFixedValueCard);
 });
 
 function createFixedValueCard() {

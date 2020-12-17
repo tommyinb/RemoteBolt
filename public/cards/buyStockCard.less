@@ -1,0 +1,22 @@
+.card.buy-stock {
+  background-color: #f093fb;
+  background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+
+  [name="stock"] {
+    font-size: 20px;
+  }
+
+  [name="price"] {
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    text-align: center;
+
+    &::before {
+      margin-right: 5px;
+      content: "$";
+      font-size: 20px;
+    }
+  }
+}
