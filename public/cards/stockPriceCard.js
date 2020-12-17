@@ -3,7 +3,7 @@ $(function () {
 });
 
 function createStockPriceCard() {
-  const card = createCard("Stock Price");
+  const card = createCard("StockPrice", "Stock Price");
   card.addClass("stock-price");
 
   const main = card.find(".main");
