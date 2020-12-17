@@ -3,7 +3,7 @@ $(function () {
 });
 
 function createSaveValueCard() {
-  const card = createCard("Save Value");
+  const card = createCard("SaveValue", "Save Value");
   card.addClass("save-value");
 
   const main = card.find(".main");

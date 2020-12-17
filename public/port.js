@@ -55,6 +55,8 @@ function createPort(text, type) {
           linkings.attr(linking, id);
 
           linkings.removeAttr("linking");
+
+          updateServer();
         } else {
           linkings.remove();
         }

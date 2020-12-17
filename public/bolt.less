@@ -2,14 +2,34 @@ html {
   font-family: Helvetica, sans-serif;
 }
 
-body {
+* {
+  font-family: inherit;
+  color: inherit;
+}
+
+.bolt {
   position: relative;
   width: 1500px;
   height: 600px;
   border: 1px solid black;
 }
 
-* {
-  font-family: inherit;
-  color: inherit;
+.play {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px 8px 15px;
+  border-radius: 20px;
+  background-color: #4e8;
+  color: white;
+  cursor: pointer;
+
+  &::before {
+    margin-right: 10px;
+    content: "▶";
+  }
+
+  &:hover {
+    background-color: black;
+    color: #4e8;
+  }
 }

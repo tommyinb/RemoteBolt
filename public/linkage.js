@@ -72,7 +72,13 @@ $(function loadRemoval() {
       return moused($(this), e);
     });
 
+    if (linkages.length <= 0) {
+      return;
+    }
+
     linkages.remove();
+
+    updateServer();
   });
 });
 
