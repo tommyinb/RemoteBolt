@@ -1,3 +1,7 @@
+$(function () {
+  addMenuItem("Restart", 5, createRestartCard);
+});
+
 function createRestartCard() {
   const card = createCard("End");
   card.addClass("restart");
@@ -6,7 +10,12 @@ function createRestartCard() {
   main.text("Restart");
 
   const ports = card.find(".ports.left");
-  createPort("From").appendTo(ports);
+  const from = createPort("From", "flow").appendTo(ports);
+
+  from.on("linkable", function (_, linkable) {
+    const fromCard = linkable.port.closest(".card");
+    linkable.result = !fromCard.is(".start");
+  });
 
   return card;
 }

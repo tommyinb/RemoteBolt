@@ -1,3 +1,7 @@
+$(function () {
+  addMenuItem("Save Value", 2, createSaveValueCard);
+});
+
 function createSaveValueCard() {
   const card = createCard("Save Value");
   card.addClass("save-value");
@@ -7,12 +11,12 @@ function createSaveValueCard() {
   main.append('<div class="value">33.3</div>');
 
   const left = card.find(".ports.left");
-  createPort("From").appendTo(left);
-  createPort("Value").appendTo(left);
+  createPort("From", "flow").appendTo(left);
+  createPort("Value", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Next").appendTo(right);
-  createPort("Value").appendTo(right);
+  createPort("Next", "flow").appendTo(right);
+  createPort("Value", "number").appendTo(right);
 
   return card;
 }

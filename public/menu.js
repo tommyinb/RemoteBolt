@@ -1,30 +1,6 @@
 $(function () {
   const menu = $(".menu");
 
-  const window = $(".bolt");
-  function addItem(text, create) {
-    const item = $(`<div class="item">${text}</div>`);
-    item.click(function () {
-      menu.removeClass("active");
-
-      const card = create();
-      card.appendTo(window);
-
-      updateServer();
-    });
-
-    item.appendTo(menu);
-
-    return item;
-  }
-
-  addItem("Compare Value", createCompareValueCard);
-  addItem("Save Value", createSaveValueCard);
-  addItem("Add Value", createAddValueCard);
-  addItem("Fixed Value", createFixedValueCard);
-  addItem("Wait", createWaitCard);
-  addItem("Restart", createRestartCard);
-
   const body = $("body");
   body.dblclick(function (e) {
     menu.addClass("active");
@@ -43,3 +19,27 @@ $(function () {
     }
   });
 });
+
+function addMenuItem(text, group, create) {
+  const item = $(`<div class="item" group="${group}">${text}</div>`);
+  item.click(function () {
+    menu.removeClass("active");
+
+    const card = create();
+    card.appendTo(".bolt");
+
+    //updateServer();
+  });
+
+  const menu = $(".menu");
+  const afters = menu.find(".item").filter(function () {
+    return parseInt($(this).attr("group")) > group;
+  });
+  if (afters.length > 0) {
+    item.insertBefore(afters.first());
+  } else {
+    item.appendTo(menu);
+  }
+
+  return item;
+}

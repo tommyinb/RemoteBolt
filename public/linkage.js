@@ -50,9 +50,9 @@ function refreshLinkage(linkage) {
 }
 
 $(function loadRemoval() {
-  const window = $(".bolt");
+  const body = $("body");
 
-  window.mousemove(function (e) {
+  body.mousemove(function (e) {
     $(".linkage").each(function () {
       const linkage = $(this);
       linkage.toggleClass("active", !linkage.attr("linking") && moused(linkage, e));
@@ -67,7 +67,7 @@ $(function loadRemoval() {
     return Math.abs(e.pageX - offset.left - x) <= 40 && Math.abs(e.pageY - offset.top - y) <= 40;
   }
 
-  window.mouseup(function (e) {
+  body.mouseup(function (e) {
     const linkages = $(".linkage").filter(function () {
       return moused($(this), e);
     });
@@ -96,6 +96,12 @@ $(function loadLinking() {
   }, 20);
 
   body.mouseup(function () {
-    $(".linkage[linking]").remove();
+    const linking = $(".linkage[linking]");
+
+    const startId = linking.attr("from") || linking.attr("to");
+    const startPort = $(`#${startId}`);
+    startPort.removeClass("linking");
+
+    linking.remove();
   });
 });

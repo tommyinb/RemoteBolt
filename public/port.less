@@ -15,12 +15,31 @@
       border-radius: 7px;
     }
 
+    &.linking,
     &:hover {
-      color: #ff0;
+      color: white;
 
       &::before,
       &::after {
-        background-color: #ff0;
+        background-color: white;
+      }
+
+      &[type="flow"] {
+        color: #ff0;
+
+        &::before,
+        &::after {
+          background-color: #ff0;
+        }
+      }
+
+      &[type="number"] {
+        color: #0ff;
+
+        &::before,
+        &::after {
+          background-color: #0ff;
+        }
       }
     }
 

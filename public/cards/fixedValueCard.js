@@ -1,3 +1,7 @@
+$(function () {
+  addMenuItem("Fixed Value", 1, createFixedValueCard);
+});
+
 function createFixedValueCard() {
   const card = createCard("Fixed Value");
   card.addClass("fixed-value");
@@ -7,7 +11,7 @@ function createFixedValueCard() {
   main.append('<input class="value" value="33.3"/>');
 
   const right = card.find(".ports.right");
-  createPort("Value").appendTo(right);
+  createPort("Value", "number").appendTo(right);
 
   return card;
 }

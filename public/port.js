@@ -1,62 +1,80 @@
-function createPort(text) {
+function createPort(text, type) {
   const port = $(`<div id=${Math.floor(Math.random() * 100000)} class="port">${text}</div>`);
+
+  if (type) {
+    port.attr("type", type);
+  }
 
   port.mousedown(function () {
     const ports = port.closest(".ports");
 
     const linkings = $(".linkage[linking]");
-    const linking = linkings.attr("linking");
-    if (linking) {
-      const card = ports.closest(".card");
+    if (linkings.length > 0) {
+      (function completeLinkage() {
+        const startId = linkings.attr("from") || linkings.attr("to");
+        const startPort = $(`#${startId}`);
 
-      const startId = linkings.attr("from") || linkings.attr("to");
-      const startPort = $(`#${startId}`);
-      const startCard = startPort.closest(".card");
-      if (startCard.is(card)) {
-        linkings.remove();
-      } else {
-        switch (linking) {
-          case "to":
-            if (ports.is(".left")) {
-              const id = port.attr("id");
-              linkings.attr("to", id);
-
-              linkings.removeAttr("linking");
-            } else {
-              linkings.remove();
+        const linking = linkings.attr("linking");
+        const linkable = (function linkable() {
+          if (linking === "from") {
+            if (!ports.is(".right")) {
+              return false;
             }
-            break;
-
-          case "from":
-            if (ports.is(".right")) {
-              const id = port.attr("id");
-              linkings.attr("from", id);
-
-              linkings.removeAttr("linking");
-            } else {
-              linkings.remove();
+          } else {
+            if (!ports.is(".left")) {
+              return false;
             }
-            break;
+          }
+
+          if (type) {
+            const startType = startPort.attr("type");
+            if (startType) {
+              if (startType !== type) {
+                return false;
+              }
+            }
+          }
+
+          const startCard = startPort.closest(".card");
+          const endCard = ports.closest(".card");
+          if (startCard.is(endCard)) {
+            return false;
+          }
+
+          const startLinkable = { port: port, result: true };
+          startPort.trigger("linkable", [startLinkable]);
+
+          const endLinkable = { port: startPort, result: true };
+          port.trigger("linkable", endLinkable);
+
+          return startLinkable.result && endLinkable.result;
+        })();
+
+        if (linkable) {
+          const id = port.attr("id");
+          linkings.attr(linking, id);
+
+          linkings.removeAttr("linking");
+        } else {
+          linkings.remove();
         }
-      }
+
+        startPort.removeClass("linking");
+      })();
     } else {
-      if (ports.is(".left")) {
-        const linkage = createLinkage(undefined, port);
+      (function startLinkage() {
+        const left = ports.is(".left");
+
+        const linkage = createLinkage(left ? undefined : port, left ? port : undefined);
         linkage.appendTo(".bolt");
 
         const id = Math.floor(Math.random() * 10000);
         linkage.attr("id", id);
 
-        linkage.attr("linking", "from");
-      } else {
-        const linkage = createLinkage(port);
-        linkage.appendTo(".bolt");
+        linkage.attr("linking", left ? "from" : "to");
 
-        const id = Math.floor(Math.random() * 10000);
-        linkage.attr("id", id);
-
-        linkage.attr("linking", "to");
-      }
+        port.addClass("linking");
+      })();
     }
 
     return false;

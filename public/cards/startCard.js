@@ -6,7 +6,7 @@ function createStartCard() {
   main.text("Entry");
 
   const ports = card.find(".ports.right");
-  createPort("Next").appendTo(ports);
+  createPort("Next", "flow").addClass("flow").appendTo(ports);
 
   return card;
 }

@@ -1,3 +1,7 @@
+$(function () {
+  addMenuItem("Wait", 4, createWaitCard);
+});
+
 function createWaitCard() {
   const card = createCard("Wait");
   card.addClass("wait");
@@ -6,10 +10,10 @@ function createWaitCard() {
   main.append('<input class="value" value="10s"/>');
 
   const left = card.find(".ports.left");
-  createPort("From").appendTo(left);
+  createPort("From", "flow").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Next").appendTo(right);
+  createPort("Next", "flow").appendTo(right);
 
   return card;
 }
