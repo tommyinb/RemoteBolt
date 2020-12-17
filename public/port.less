@@ -1,0 +1,59 @@
+.ports {
+  place-self: center;
+
+  .port {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #444;
+
+    &::before,
+    &::after {
+      background-color: #444;
+      width: 7px;
+      height: 7px;
+      border-radius: 7px;
+    }
+
+    &:hover {
+      color: #ff0;
+
+      &::before,
+      &::after {
+        background-color: #ff0;
+      }
+    }
+
+    + .port {
+      margin-top: 10px;
+    }
+  }
+
+  &.left {
+    grid-area: left;
+    margin-right: 5px;
+
+    .port {
+      justify-content: flex-start;
+
+      &::before {
+        margin-right: 5px;
+        content: "";
+      }
+    }
+  }
+
+  &.right {
+    grid-area: right;
+    margin-left: 5px;
+
+    .port {
+      justify-content: flex-end;
+
+      &::after {
+        margin-left: 5px;
+        content: "";
+      }
+    }
+  }
+}

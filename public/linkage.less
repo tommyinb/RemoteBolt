@@ -1,0 +1,21 @@
+.linkage {
+  position: absolute;
+  pointer-events: none;
+
+  &.active {
+    &::after {
+      position: absolute;
+      left: calc(50% - 12px);
+      top: calc(50% - 12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      background-color: white;
+      content: "✖";
+      color: #800;
+    }
+  }
+}

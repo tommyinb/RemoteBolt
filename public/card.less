@@ -1,0 +1,60 @@
+.card {
+  position: absolute;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: ". title ." "left main right";
+  border-radius: 5px;
+  padding: 5px;
+  user-select: none;
+
+  .title {
+    grid-area: title;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    text-align: center;
+    font-size: 12px;
+    color: fade(#000, 60%);
+  }
+
+  .cross {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    color: #844;
+  }
+
+  &:not(:hover),
+  &.critical {
+    .cross {
+      display: none;
+    }
+  }
+
+  .main {
+    grid-area: main;
+    border-radius: 2px;
+    background-color: fade(#fff, 20%);
+    padding: 10px 20px;
+
+    .stock {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .price {
+      display: flex;
+      align-items: center;
+      font-size: 40px;
+      text-align: center;
+
+      &::before {
+        margin-right: 5px;
+        content: "$";
+        font-size: 20px;
+      }
+    }
+  }
+}
