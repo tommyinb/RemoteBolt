@@ -8,15 +8,15 @@ function createSaveValueCard() {
 
   const main = card.find(".main");
   main.append('<input class="name" value="name"/>');
-  main.append('<div class="value">33.3</div>');
+  main.append('<div name="value">33.3</div>');
 
   const left = card.find(".ports.left");
-  createPort("From", "flow").appendTo(left);
-  createPort("Value", "number").appendTo(left);
+  createPort("from", "From", "flow").appendTo(left);
+  createPort("fromValue", "Value", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Next", "flow").appendTo(right);
-  createPort("Value", "number").appendTo(right);
+  createPort("to", "Next", "flow").appendTo(right);
+  createPort("toValue", "Value", "number").appendTo(right);
 
   return card;
 }

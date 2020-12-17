@@ -7,11 +7,11 @@ function createFixedValueCard() {
   card.addClass("fixed-value");
 
   const main = card.find(".main");
-  main.append('<input class="name" value="name"/>');
-  main.append('<input class="value" value="33.3"/>');
+  main.append('<input name="name" value="name"/>');
+  main.append('<input name="value" value="33.3"/>');
 
   const right = card.find(".ports.right");
-  createPort("Value", "number").appendTo(right);
+  createPort("value", "Value", "number").appendTo(right);
 
   return card;
 }

@@ -10,7 +10,7 @@ function createRestartCard() {
   main.text("Restart");
 
   const ports = card.find(".ports.left");
-  const from = createPort("From", "flow").appendTo(ports);
+  const from = createPort("from", "From", "flow").appendTo(ports);
 
   from.on("linkable", function (_, linkable) {
     const fromCard = linkable.port.closest(".card");

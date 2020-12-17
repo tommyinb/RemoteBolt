@@ -2,15 +2,14 @@ export default (id, bolt) => {
   const runner = {
     id,
 
-    getPortId: (portText) => {
-      const port = Object.values(bolt.data).find(
-        (t) => t.type === "port" && t.card === id && t.text === portText
-      );
-      return port?.id;
-    },
+    ports: Object.fromEntries(
+      Object.values(bolt.data)
+        .filter((t) => t.type === "port")
+        .filter((t) => t.card === id)
+        .map((t) => [t.name, t.id])
+    ),
 
     in: (portId, value) => undefined,
-
     out: (portId, value) =>
       Object.values(bolt.data)
         .filter((t) => t.type === "linkage")
@@ -21,6 +20,18 @@ export default (id, bolt) => {
           const runner = bolt.runners[port.card];
           return runner?.in(port.id, value);
         }),
+
+    forceIn: (portId) =>
+      Object.values(bolt.data)
+        .filter((t) => t.type === "linkage")
+        .filter((t) => t.to === portId)
+        .map((t) => t.from)
+        .map((t) => bolt.data[t])
+        .map((port) => {
+          const runner = bolt.runners[port.card];
+          return runner?.forceOut(port.id);
+        }),
+    forceOut: (portId) => undefined,
 
     update: () => undefined,
 
