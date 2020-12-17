@@ -3,20 +3,24 @@
   background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
   color: white;
 
-  [name="stock"] {
-    font-size: 20px;
-  }
-
-  [name="price"] {
+  .main {
     display: flex;
-    align-items: center;
-    font-size: 40px;
-    text-align: center;
+    flex-direction: column;
 
-    &::before {
-      margin-right: 5px;
-      content: "$";
+    [name="stock"] {
       font-size: 20px;
+    }
+
+    .price {
+      [name="price"] {
+        font-size: 40px;
+      }
+
+      &::before {
+        margin-right: 5px;
+        font-size: 20px;
+        content: "$";
+      }
     }
   }
 }

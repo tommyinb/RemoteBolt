@@ -7,17 +7,25 @@ function createBuyStockCard() {
   card.addClass("buy-stock");
 
   const main = card.find(".main");
-  main.append(`<input class="stock" name="stock" value="0001"/>`);
+  main.append(`
+    <input class="user" name="stock" value="0001"/>
 
-  const priceText = $(`<div class="price" name="price">30.1</div>`).appendTo(main);
+    <div class="price">
+      <input name="price" value="30.1"/>
+    </div>
+  `);
+
+  main.find("input").change(function () {
+    updateServer();
+  });
 
   const left = card.find(".ports.left");
-  createPort("From", "flow").appendTo(left);
-  createPort("Price", "number").appendTo(left);
+  createPort("from", "From", "flow").appendTo(left);
+  createPort("price", "Price", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Success", "flow").appendTo(right);
-  createPort("Failure", "flow").appendTo(right);
+  createPort("to", "Success", "flow").appendTo(right);
+  createPort("fail", "Failure", "flow").appendTo(right);
 
   return card;
 }
