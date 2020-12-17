@@ -17,8 +17,9 @@ export default (id, bolt) => {
     const cancellable = Cancellable();
     cancellables.add(cancellable);
 
-    const time = parseInt(bolt.data[id].main.time) * 1000;
-    await cancellable.wait(time);
+    for (let i = 0; i < parseInt(bolt.data[id].main.time); i++) {
+      await cancellable.wait(1000);
+    }
 
     bolt.data[id].states.remove("active");
     bolt.data[card.ports.next].states.push("active");
