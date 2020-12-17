@@ -12,20 +12,12 @@ function createBuyStockCard() {
   const priceText = $(`<div class="price" name="price">30.1</div>`).appendTo(main);
 
   const left = card.find(".ports.left");
-
-  const from = createPort("From").appendTo(left);
-  from.on("in", function () {
-    card.addClass("active");
-  });
-
-  const pricePort = createPort("Price").appendTo(left);
-  pricePort.on("in", function (_, price) {
-    priceText.text(price);
-  });
+  createPort("From", "flow").appendTo(left);
+  createPort("Price", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Success").appendTo(right);
-  createPort("Failure").appendTo(right);
+  createPort("Success", "flow").appendTo(right);
+  createPort("Failure", "flow").appendTo(right);
 
   return card;
 }

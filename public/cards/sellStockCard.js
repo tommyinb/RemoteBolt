@@ -11,12 +11,12 @@ function createSellStockCard() {
   main.append(`<div class="price">30.1</div>`);
 
   const left = card.find(".ports.left");
-  createPort("From").appendTo(left);
-  createPort("Price").appendTo(left);
+  createPort("From", "flow").appendTo(left);
+  createPort("Price", "number").appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("Success").appendTo(right);
-  createPort("Failure").appendTo(right);
+  createPort("Success", "flow").appendTo(right);
+  createPort("Failure", "flow").appendTo(right);
 
   return card;
 }
