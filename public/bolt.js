@@ -88,8 +88,9 @@ function getLinkageData(linkage) {
 }
 
 function setCardData(card, data) {
+  const main = card.find(".main");
   for (const [name, value] of Object.entries(data.main)) {
-    const field = card.find(`[name="${name}"]`);
+    const field = main.find(`[name="${name}"]:not(.user)`);
     if (field.is("input")) {
       field.val(value);
       field.trigger("refresh");
