@@ -22,14 +22,18 @@ function redrawCurve(curve) {
   curve.attr("height", margin + height + margin);
 
   const path = curve.find("path");
-  path.attr(
-    "d",
-    `M ${margin + (from.point.x - rectangle.left)} ${margin + (from.point.y - rectangle.top)} C ${
-      margin + (from.shoot.x - rectangle.left)
-    } ${margin + (from.shoot.y - rectangle.top)}, ${margin + (to.shoot.x - rectangle.left)} ${
-      margin + (to.shoot.y - rectangle.top)
-    }, ${margin + (to.point.x - rectangle.left)} ${margin + (to.point.y - rectangle.top)}`
-  );
+
+  const pathCode = `M ${margin + (from.point.x - rectangle.left)} ${
+    margin + (from.point.y - rectangle.top)
+  } C ${margin + (from.shoot.x - rectangle.left)} ${margin + (from.shoot.y - rectangle.top)}, ${
+    margin + (to.shoot.x - rectangle.left)
+  } ${margin + (to.shoot.y - rectangle.top)}, ${margin + (to.point.x - rectangle.left)} ${
+    margin + (to.point.y - rectangle.top)
+  }`;
+
+  if (path.attr("d") !== pathCode) {
+    path.attr("d", pathCode);
+  }
 
   return {
     x: rectangle.left - margin,

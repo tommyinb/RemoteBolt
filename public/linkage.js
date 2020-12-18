@@ -78,6 +78,18 @@ $(function loadRemoval() {
 
     linkages.remove();
 
+    linkages.each(function () {
+      const linkage = $(this);
+
+      const from = $(`#${linkage.attr("from")}`);
+      setPortLimited(from);
+      from.trigger("unlinked");
+
+      const to = $(`#${linkage.attr("to")}`);
+      setPortLimited(to);
+      to.trigger("unlinked");
+    });
+
     updateServer();
   });
 });

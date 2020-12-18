@@ -8,10 +8,15 @@ function createFixedValueCard() {
 
   const main = card.find(".main");
   main.append('<input name="name" value="name"/>');
-  main.append('<input name="value" value="33.3"/>');
+
+  $('<input name="value" value="33.3"/>')
+    .appendTo(main)
+    .change(function () {
+      updateServer();
+    });
 
   const right = card.find(".ports.right");
-  createPort("value", "Value", "number").appendTo(right);
+  createPort("value", "Value", "number", 100).appendTo(right);
 
   return card;
 }

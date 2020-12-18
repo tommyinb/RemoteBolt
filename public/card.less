@@ -6,6 +6,7 @@
   grid-template-areas: ". title ." "left main right";
   border-radius: 5px;
   padding: 5px;
+  animation: fadeIn 0.1s forwards;
   user-select: none;
 
   .title {
@@ -60,5 +61,14 @@
 
   &[state*="active"] {
     animation: shake 0.1s infinite;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

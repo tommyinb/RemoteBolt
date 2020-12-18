@@ -7,14 +7,26 @@ function createAddValueCard() {
   card.addClass("add-value");
 
   const main = card.find(".main");
-  main.append('<input name="value" value="1.7"/>');
+  const value = $('<input name="value" value="1.7"/>')
+    .appendTo(main)
+    .change(function () {
+      updateServer();
+    });
 
   const left = card.find(".ports.left");
-  createPort("from", "Value", "number").appendTo(left);
-  createPort("add", "Adder", "number").appendTo(left);
+  createPort("from", "Value", "number", 1).appendTo(left);
+
+  createPort("add", "Adder", "number", 1)
+    .appendTo(left)
+    .on("linked", function () {
+      value.attr("readonly", true);
+    })
+    .on("unlinked", function () {
+      value.removeAttr("readonly");
+    });
 
   const right = card.find(".ports.right");
-  createPort("to", "Sum", "number").appendTo(right);
+  createPort("to", "Sum", "number", 100).appendTo(right);
 
   return card;
 }

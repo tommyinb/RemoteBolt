@@ -10,12 +10,12 @@ function createRestartCard() {
   main.text("Restart");
 
   const ports = card.find(".ports.left");
-  const from = createPort("from", "From", "flow").appendTo(ports);
-
-  from.on("linkable", function (_, linkable) {
-    const fromCard = linkable.port.closest(".card");
-    linkable.result = !fromCard.is(".start");
-  });
+  createPort("from", "From", "flow", 10)
+    .appendTo(ports)
+    .on("linkable", function (_, linkable) {
+      const fromCard = linkable.port.closest(".card");
+      linkable.result = !fromCard.is(".start");
+    });
 
   return card;
 }

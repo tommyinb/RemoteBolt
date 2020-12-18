@@ -21,7 +21,9 @@ export default (id, bolt) => {
       await cancellable.wait(100);
 
       const [value] = card.forceIn(card.ports.fromValue);
-      bolt.data[id].main.value = value || 0;
+      if (value !== undefined) {
+        bolt.data[id].main.value = value || 0;
+      }
 
       bolt.send();
 

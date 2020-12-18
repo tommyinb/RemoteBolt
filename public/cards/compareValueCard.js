@@ -22,14 +22,14 @@ function createCompareValueCard() {
   }
 
   const left = card.find(".ports.left");
-  createPort("fromA", "A", "number").appendTo(left);
-  createPort("from", "From", "flow").appendTo(left);
-  createPort("fromB", "B", "number").appendTo(left);
+  createPort("fromA", "A", "number", 1).appendTo(left);
+  createPort("from", "From", "flow", 10).appendTo(left);
+  createPort("fromB", "B", "number", 1).appendTo(left);
 
   const right = card.find(".ports.right");
-  createPort("toA", "A Larger", "flow").appendTo(right);
-  createPort("to", "Equal", "flow").appendTo(right);
-  createPort("toB", "B Larger", "flow").appendTo(right);
+  createPort("toA", "A Larger", "flow", 10).appendTo(right);
+  createPort("to", "Equal", "flow", 10).appendTo(right);
+  createPort("toB", "B Larger", "flow", 10).appendTo(right);
 
   return card;
 }

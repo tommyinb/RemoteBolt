@@ -26,6 +26,7 @@ $(async function connectServer() {
     $.post(`/end/${id}`);
   });
 });
+
 function getBoltData() {
   const bolt = $(".bolt");
   const boltData = { id: bolt.attr("id") };
@@ -40,7 +41,7 @@ function getBoltData() {
     boltData[portData.id] = portData;
   });
 
-  bolt.find(".linkage").each(function () {
+  bolt.find(".linkage:not([linking])").each(function () {
     const linkageData = getLinkageData($(this));
     boltData[linkageData.id] = linkageData;
   });

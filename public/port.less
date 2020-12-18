@@ -15,36 +15,42 @@
       border-radius: 7px;
     }
 
-    &.linking,
-    &:hover {
-      color: white;
-
-      &::before,
-      &::after {
-        background-color: white;
-      }
-
-      &[type="flow"] {
-        color: #ff0;
+    &:not(.limited) {
+      &.linking,
+      &:hover {
+        color: white;
 
         &::before,
         &::after {
-          background-color: #ff0;
+          background-color: white;
         }
-      }
 
-      &[type="number"] {
-        color: #0ff;
+        &[type="flow"] {
+          color: #ff0;
 
-        &::before,
-        &::after {
-          background-color: #0ff;
+          &::before,
+          &::after {
+            background-color: #ff0;
+          }
+        }
+
+        &[type="number"] {
+          color: #0ff;
+
+          &::before,
+          &::after {
+            background-color: #0ff;
+          }
         }
       }
     }
 
     + .port {
       margin-top: 10px;
+    }
+
+    &[state*="active"] {
+      animation: shake 0.1s infinite;
     }
   }
 

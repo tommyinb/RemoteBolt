@@ -22,11 +22,16 @@ $(function () {
 
 function addMenuItem(text, group, create) {
   const item = $(`<div class="item" group="${group}">${text}</div>`);
-  item.click(function () {
+  item.click(function (e) {
     menu.removeClass("active");
 
     const card = create();
     card.appendTo(".bolt");
+
+    card.offset({
+      left: e.pageX - 50,
+      top: e.pageY - 10,
+    });
 
     updateServer();
   });
